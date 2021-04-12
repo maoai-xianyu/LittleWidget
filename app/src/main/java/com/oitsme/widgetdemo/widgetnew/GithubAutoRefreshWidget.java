@@ -21,7 +21,7 @@ import com.oitsme.widgetdemo.view.GlideRoundedCornersTransform.CornerType;
 /**
  * @author zhangkun
  * @time 2021/3/22 3:29 PM
- * @Description
+ * @Description 使用handler 进行自动刷新
  */
 public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
 
@@ -30,7 +30,6 @@ public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
     private String name = "maoai-xianyu";
 
     Handler handler = new Handler(Looper.getMainLooper());
-    private boolean flag = true;
 
     @Override
     public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -44,21 +43,18 @@ public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
         name = "bennyhuo";
         LogU.showDLog("自动刷新 后赋值 为" + name);
 
-        if (flag) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                    ComponentName thisAppWidgetComponentName = new ComponentName(context, GithubAutoRefreshWidget.class);
-                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidgetComponentName);
-                    LogU.showILog("handler  延时 name " + name);
-                    //name = "bennyhuo";
-                    //getHotMovie(name);
-                    onUpdate(context, appWidgetManager, appWidgetIds);
-                }
-            }, 10000);
-            flag = false;
-        }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                ComponentName thisAppWidgetComponentName = new ComponentName(context, GithubAutoRefreshWidget.class);
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidgetComponentName);
+                LogU.showILog("handler  延时 name " + name);
+                //name = "bennyhuo";
+                //getHotMovie(name);
+                onUpdate(context, appWidgetManager, appWidgetIds);
+            }
+        }, 10000);
 
     }
 
@@ -69,7 +65,8 @@ public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
         this.mRemoteViews.setOnClickPendingIntent(R.id.ll_right, pi);
 
         Intent btIntent = new Intent(context, GithubAutoRefreshWidget.class);
-        btIntent.setAction("refresh");
+        //btIntent.setAction("refresh");
+        btIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         PendingIntent btPendingIntent = PendingIntent
             .getBroadcast(context, appWidgetId, btIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -89,7 +86,7 @@ public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
 
     @Override
     void showHotMovie(User user) {
-        LogU.showILog(" 自动 user " + user.toString());
+        LogU.showILog(" 自动 user " + user);
         LogU.showILog(" 自动 mRemoteViews " + mRemoteViews);
         LogU.showILog(" 自动 appWidgetManager " + mAppWidgetManager);
         LogU.showILog(" 自动 appWidgetIds " + mAppWidgetIds);
@@ -137,13 +134,19 @@ public class GithubAutoRefreshWidget extends BaseAppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (context != null) {
-            LogU.showElog(" 自动  刷新  ");
             String action = intent.getAction();
+            LogU.showElog("handler 自动  刷新  " + action);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (TextUtils.equals(action, "refresh")) {
-                LogU.showElog(" 自动  刷新  bennyhuo");
+                LogU.showElog("handler 自动  刷新  bennyhuo");
                 getHotMovie("bennyhuo");
             }
         }
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        handler.removeCallbacksAndMessages(null);
     }
 }

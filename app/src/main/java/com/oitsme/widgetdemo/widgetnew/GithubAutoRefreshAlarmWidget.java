@@ -21,7 +21,7 @@ import com.oitsme.widgetdemo.view.GlideRoundedCornersTransform.CornerType;
 /**
  * @author zhangkun
  * @time 2021/3/22 3:29 PM
- * @Description
+ * @Description 基于 AlarmManager 进行赋值，点击刷新按钮有问题
  */
 public class GithubAutoRefreshAlarmWidget extends BaseAppWidgetProvider {
 
@@ -32,14 +32,14 @@ public class GithubAutoRefreshAlarmWidget extends BaseAppWidgetProvider {
     @Override
     public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        LogU.showDLog("自动刷新 前 " + name);
+        LogU.showDLog("Alarm自动刷新 前 " + name);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         getHotMovie(name);
         name = "bennyhuo";
-        LogU.showDLog("自动刷新 后赋值 为" + name);
+        LogU.showDLog("Alarm自动刷新 后赋值 为" + name);
     }
 
     @Override
@@ -102,11 +102,11 @@ public class GithubAutoRefreshAlarmWidget extends BaseAppWidgetProvider {
 
     @Override
     void showHotMovie(User user) {
-        LogU.showILog(" 自动 user " + user);
-        LogU.showILog(" 自动 mRemoteViews " + mRemoteViews);
-        LogU.showILog(" 自动 appWidgetManager " + mAppWidgetManager);
-        LogU.showILog(" 自动 appWidgetIds " + mAppWidgetIds);
-        LogU.showILog(" 自动 mContext " + mContext);
+        LogU.showILog(" Alarm自动 user " + user);
+        LogU.showILog(" Alarm自动 mRemoteViews " + mRemoteViews);
+        LogU.showILog(" Alarm自动 appWidgetManager " + mAppWidgetManager);
+        LogU.showILog(" Alarm自动 appWidgetIds " + mAppWidgetIds);
+        LogU.showILog(" Alarm自动 mContext " + mContext);
         if (user != null) {
             mRemoteViews.setTextViewText(R.id.tvId, user.getId() + "");
             mRemoteViews.setTextViewText(R.id.tvName, user.getName());
@@ -143,5 +143,21 @@ public class GithubAutoRefreshAlarmWidget extends BaseAppWidgetProvider {
             mRemoteViews.setViewVisibility(R.id.ivRightBottom, View.GONE);
         }
         mAppWidgetManager.updateAppWidget(mAppWidgetIds, mRemoteViews);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if (context != null) {
+            String action = intent.getAction();
+            LogU.showElog("alarm 自动  刷新  " + action);
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            if (TextUtils.equals(action, "refresh")) {
+                LogU.showElog(" alarm  刷新  bennyhuo");
+                getHotMovie("bennyhuo");
+            }
+        }
+
     }
 }

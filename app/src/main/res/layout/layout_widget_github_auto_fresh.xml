@@ -5,34 +5,40 @@
     android:id="@+id/ll_right"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="5dp"
     android:background="@drawable/shape_widget_corner"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/rlCard"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:background="@mipmap/ic_launcher_round" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="hd刷新"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
 
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/iv_icon"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/tvId"
-            android:text="显示名字"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/icon_tab_publish"
+            android:text="handler刷新"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvId"
@@ -43,14 +49,15 @@
             android:text="显示id"
             android:textColor="@color/gray_40" />
 
-        <Button
-            android:id="@+id/btnRefresh"
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true"
-            android:text="handler自动刷新"
-            android:textSize="16sp" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvId"
+            android:text="显示名字"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
 
 
     </RelativeLayout>

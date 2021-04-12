@@ -18,7 +18,7 @@ import com.oitsme.widgetdemo.view.GlideRoundedCornersTransform.CornerType;
 /**
  * @author zhangkun
  * @time 2021/3/22 3:29 PM
- * @Description
+ * @Description 手动刷新，需要对 mRemoteViews 进行重新赋值，因为从广播中进行数据的更新
  */
 public class GithubSelfRefreshWidget extends BaseAppWidgetProvider {
 
@@ -55,7 +55,7 @@ public class GithubSelfRefreshWidget extends BaseAppWidgetProvider {
 
     @Override
     void showHotMovie(User user, Context context) {
-        LogU.showILog(" 手动  user " + user.toString());
+        LogU.showILog(" 手动  user " + user);
         LogU.showILog(" 手动 mRemoteViews " + mRemoteViews);
         LogU.showILog(" 手动 appWidgetManager " + mAppWidgetManager);
         LogU.showILog(" 手动 appWidgetIds " + mAppWidgetIds);
@@ -116,8 +116,8 @@ public class GithubSelfRefreshWidget extends BaseAppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (context != null) {
-            LogU.showElog("手动  刷新  ");
             String action = intent.getAction();
+            LogU.showElog("手动  刷新  " + action);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (TextUtils.equals(action, "refresh")) {
                 LogU.showElog("  刷新  bennyhuo");

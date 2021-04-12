@@ -91,7 +91,7 @@ public abstract class BaseAppWidgetProvider extends AppWidgetProvider {
         });
     }
 
-    public static final String MOVIE_CARD = "com.sankuai.movie.action.MOVIE_CARD";
+    public static final String MOVIE_CARD = "com.coding.action.MOVIE_CARD";
     public static final String MOVIE_CARD_DETAIL = "movie_card";
     public static final String MOVIE_CARD_DETAIL_INDEX = "movie_card_index";
 
