@@ -66,6 +66,17 @@
                 android:resource="@xml/widget_provider_github_auto_fresh" />
         </receiver>
 
+        <receiver android:name=".widgetnew.GithubAutoRefreshAlarmWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_github_auto_fresh_alarm" />
+        </receiver>
+
+        <receiver android:name=".widgetnew.AlarmManagerBroadcastReceiver"/>
+
         <receiver android:name=".widgetnew.GithubSelfRefreshWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
